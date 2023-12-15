@@ -61,22 +61,20 @@ function generateSVG({ text, textColor, shape, shapeColor }) {
     }
     // Creates an SVG content string using template literals.
     // It inputs the shape and text based on the users input.
-    const svgContent = `
+    return `
     <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-    ${shapeObj.render()}
-    <text 
-        x="50%" 
-        y="50%" 
-        dominant-baseline="middle" 
-        text-anchor="middle" 
-        fill="${textColor}" 
-        style="font-size: 20px; alignment-baseline: middle;">
-        ${text}
-    </text>
-</svg>
+        ${shapeObj.render()}
+        <text 
+            x="50%" 
+            y="50%" 
+            dominant-baseline="middle" 
+            text-anchor="middle" 
+            fill="${textColor}" 
+            style="font-family: Arial, sans-serif; font-size: 40px;">
+            ${text}
+        </text>
+    </svg>
     `;
-    // Returns the SVG content.
-    return svgContent;
 }
 
 async function main() {
@@ -84,8 +82,22 @@ async function main() {
         const { fs, Triangle, Circle, Square } = await importModules();// Retrieves modules and shape classes.
         const userInput = await promptUser(); //Collects user inputs through prompts. 
         const svg = generateSVG(userInput, { Triangle, Circle, Square }); //Generates SVG after user answers prompt questions. 
-
-        await fs.promises.writeFile('./index.html', svg); //Displays SVG content in HTML file.
+        const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Logo Example</title>
+</head>
+<body>
+<div id="logo-container" style="display: flex; align-items: center; justify-content: center;">
+    ${svg}
+</div>
+</body>
+</html>
+        `;
+        await fs.promises.writeFile('./index.html', htmlContent, 'utf8'); //Displays SVG content in HTML file.
         console.log('Generated logo.svg'); //Success message. 
     } catch (error) {
         console.error('An error occurred:', error.message); // Logs any errors that occur during execution.
