@@ -62,13 +62,37 @@ function generateSVG({ text, textColor, shape, shapeColor }) {
     // Creates an SVG content string using template literals.
     // It inputs the shape and text based on the users input.
     const svgContent = `
-        <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
-            ${shapeObj.render()}
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${textColor}">${text}</text>
-        </svg>
+    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+    ${shapeObj.render()}
+    <text 
+        x="50%" 
+        y="50%" 
+        dominant-baseline="middle" 
+        text-anchor="middle" 
+        fill="${textColor}" 
+        style="font-size: 20px; alignment-baseline: middle;">
+        ${text}
+    </text>
+</svg>
     `;
     // Returns the SVG content.
     return svgContent;
 }
+
+async function main() {
+    try {
+        const { fs, Triangle, Circle, Square } = await importModules();// Retrieves modules and shape classes.
+        const userInput = await promptUser(); //Collects user inputs through prompts. 
+        const svg = generateSVG(userInput, { Triangle, Circle, Square }); //Generates SVG after user answers prompt questions. 
+
+        await fs.promises.writeFile('./index.html', svg); //Displays SVG content in HTML file.
+        console.log('Generated logo.svg'); //Success message. 
+    } catch (error) {
+        console.error('An error occurred:', error.message); // Logs any errors that occur during execution.
+    }
+}
+
 // Imports the shape classes (Triangle, Circle, Square) from the 'shape.js' file. 
 import { Triangle, Circle, Square } from './lib/shape.js';
+
+main();  // Calls the main function to start the prompts.
