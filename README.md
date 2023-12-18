@@ -3,6 +3,7 @@
 ## Overview
 
 This project is a Node.js command-line application that generates SVG logos with user-defined shapes and colors.
+Here's a demo of how to use the application: https://drive.google.com/file/d/15uz6bNCVJovYXqPCz_oWmfimMmT85mmQ/view. 
 
 ## Features
 
