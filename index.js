@@ -1,10 +1,10 @@
-// "import inquirer" is the package I use for creating interactive questions in the command-line.
+// "Import inquirer" is the package I use for creating interactive questions in the command-line.
 import inquirer from 'inquirer';
 
 async function importModules() {
-    //imports the 'fs' module to for handling file system operations.
+    //Imports the 'fs' module to for handling file system operations.
     const fs = await import('fs');
-    //imports the shape module fom the the file path './lib/shape.js'
+    //Imports the shape module fom the the file path './lib/shape.js'
     const shapesModule = await import('./lib/shape.js');
     // Returns an object that contains both imported modules, with 'fs' and the exports from 'shapesModule'. 
     return { fs, ...shapesModule };
